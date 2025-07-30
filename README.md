@@ -1,4 +1,7 @@
 Sistema de gerenciamento de fila 
+
+http://localhost:8080/swagger-ui/index.html
+
 Em desenvolvimento - Objetivos
 
 - Gerar uma senha para o usuario   --- ok
