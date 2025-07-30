@@ -27,6 +27,9 @@ public class Setor {
     @Column(name = "tag" , nullable = false, unique = true, length = 3)
     private String tag;
 
+    @Column(name = "descricao", nullable = false)
+    private String descricao;
+
     // Construtor padrão (necessário para JPA)
     // serao gerados com Lombok
 

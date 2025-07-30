@@ -1,6 +1,0 @@
-CREATE TABLE atendente (
-
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    numero_caixa INT NOT NULL UNIQUE,
-    descricao VARCHAR(255) NOT NULL
-);

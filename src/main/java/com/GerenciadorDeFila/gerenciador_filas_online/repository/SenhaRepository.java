@@ -12,9 +12,10 @@ import java.util.Optional;
 
 public interface SenhaRepository extends JpaRepository<SenhaChamada, Long> {
 
-    // Retorna as 4 ultimas sehas chamadas
+    // Retorna as 4 ultimas sehas chamadas do dia atual
 
-    List<SenhaChamada> findTop4ByStatusOrderByDataDeConclusaoDesc(Status status);
+    List<SenhaChamada> findTop4ByStatusAndDataDeConclusaoGreaterThanEqualOrderByDataDeConclusaoDesc(Status status, LocalDateTime dataInicio);
+
 
     /**
      * Encontra o maior número sequencial para uma combinação específica de prefixo de senha e serviço,

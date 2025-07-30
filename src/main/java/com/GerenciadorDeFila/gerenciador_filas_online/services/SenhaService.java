@@ -2,13 +2,11 @@ package com.GerenciadorDeFila.gerenciador_filas_online.services;
 
 import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.RecursoNaoEncontradoException;
 import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.ValidacaoNegocioException;
-import com.GerenciadorDeFila.gerenciador_filas_online.model.Prioridade;
-import com.GerenciadorDeFila.gerenciador_filas_online.model.SenhaChamada;
-import com.GerenciadorDeFila.gerenciador_filas_online.model.Servico;
-import com.GerenciadorDeFila.gerenciador_filas_online.model.Setor;
+import com.GerenciadorDeFila.gerenciador_filas_online.model.*;
 import com.GerenciadorDeFila.gerenciador_filas_online.repository.PrioridadeRepository;
 import com.GerenciadorDeFila.gerenciador_filas_online.repository.SenhaRepository;
 import com.GerenciadorDeFila.gerenciador_filas_online.repository.ServicoRepository;
+import com.GerenciadorDeFila.gerenciador_filas_online.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +19,15 @@ public class SenhaService {
     private final SenhaRepository senhaRepository;
     private final ServicoRepository servicoRepository;
     private final PrioridadeRepository prioridadeRepository;
-
+    private final StatusRepository statusRepository;
 
     @Autowired
-    public SenhaService(SenhaRepository senhaRepository, ServicoRepository servicoRepository, PrioridadeRepository prioridadeRepository) {
+    public SenhaService(SenhaRepository senhaRepository, ServicoRepository servicoRepository, PrioridadeRepository prioridadeRepository, StatusRepository statusRepository) {
 
         this.senhaRepository = senhaRepository;
         this.servicoRepository = servicoRepository;
         this.prioridadeRepository = prioridadeRepository;
+        this.statusRepository = statusRepository;
     }
 
 
@@ -75,12 +74,16 @@ public class SenhaService {
         String numeroFormatado = String.format("%04d", proximoNumero);
         String senhaCompleta = String.format("%s-%s", prefixo, numeroFormatado);
 
+        // Retona o status de aguardadndo
+        Status statusAgardando = statusRepository.findByDescricao("AGUARDANDO")
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Status 'AGUARDANDO' não encontrado. Verifique os status cadastrados"));
+
         // Criar e salvar a nova SenhaChamada
         SenhaChamada novaSenha = new SenhaChamada();
         novaSenha.setSenha(senhaCompleta);
         novaSenha.setNumeroSequencial(proximoNumero);
-        novaSenha.setPrioridade(prioridadeEntity.getNivel());
-        novaSenha.setStatus(StatusAtendimento.AGUARDANDO);
+        novaSenha.setPrioridade(prioridadeEntity);
+        novaSenha.setStatus(statusAgardando);
         novaSenha.setServico(servico);
         novaSenha.setDataDeCriacao(LocalDateTime.now());
 

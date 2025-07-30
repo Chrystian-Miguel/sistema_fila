@@ -4,7 +4,8 @@
 -- Tabela 'setores' onde identifica em qual local esta rodando esta fila.
 CREATE TABLE setores (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL UNIQUE
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    descricao VARCHAR(255)
 );
 
 -- Tabela 'servicos' com a chave estrangeira para 'setores', identifica a qual serviço a fila pertence.

@@ -11,7 +11,7 @@ public record SenhaRespostaDTO(
     public SenhaRespostaDTO(SenhaChamada senha) {
         this(
                 senha.getSenha(),
-                senha.getStatus().name(),
+                senha.getStatus().getDescricao(),
                 senha.getDataDeCriacao(),
                 senha.getServico().getDescricao()
         );
