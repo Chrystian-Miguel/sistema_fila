@@ -2,6 +2,9 @@ package com.GerenciadorDeFila.gerenciador_filas_online.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.boot.jaxb.hbm.internal.RepresentationModeConverter;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "senha_chamada")
@@ -10,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SenhaChamada {
+public class SenhaChamada extends RepresentationModel<SenhaChamada> {
 
 
     @Id
@@ -46,7 +49,12 @@ public class SenhaChamada {
     @Column(name = "data_de_conclusao")
     private LocalDateTime dataDeConclusao;
 
-    @Column(name = "atendidopor", length = 50)
-    private String atendidopor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "atendente_id") // A senha agora tem um vínculo com um atendente
+    private Atendente atendente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "caixa_id") // E também com um caixa
+    private Caixa caixa;
 
 }

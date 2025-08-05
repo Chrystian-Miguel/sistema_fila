@@ -1,17 +1,18 @@
 package com.GerenciadorDeFila.gerenciador_filas_online.services;
 
+import com.GerenciadorDeFila.gerenciador_filas_online.dto.FilaControllerDTO;
 import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.RecursoNaoEncontradoException;
 import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.ValidacaoNegocioException;
+import com.GerenciadorDeFila.gerenciador_filas_online.mapper.FilaMapper;
 import com.GerenciadorDeFila.gerenciador_filas_online.model.*;
-import com.GerenciadorDeFila.gerenciador_filas_online.repository.PrioridadeRepository;
-import com.GerenciadorDeFila.gerenciador_filas_online.repository.SenhaRepository;
-import com.GerenciadorDeFila.gerenciador_filas_online.repository.ServicoRepository;
-import com.GerenciadorDeFila.gerenciador_filas_online.repository.StatusRepository;
+import com.GerenciadorDeFila.gerenciador_filas_online.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SenhaService {
@@ -20,14 +21,21 @@ public class SenhaService {
     private final ServicoRepository servicoRepository;
     private final PrioridadeRepository prioridadeRepository;
     private final StatusRepository statusRepository;
+    private final SetorRepository setorRepository;
+    private final FilaMapper filaMapper;
 
     @Autowired
-    public SenhaService(SenhaRepository senhaRepository, ServicoRepository servicoRepository, PrioridadeRepository prioridadeRepository, StatusRepository statusRepository) {
+    public SenhaService(SenhaRepository senhaRepository, ServicoRepository servicoRepository,
+                        PrioridadeRepository prioridadeRepository, StatusRepository statusRepository,
+                        SetorRepository setorRepository, FilaMapper filaMapper) {
 
         this.senhaRepository = senhaRepository;
         this.servicoRepository = servicoRepository;
         this.prioridadeRepository = prioridadeRepository;
         this.statusRepository = statusRepository;
+        this.setorRepository = setorRepository;
+        this.filaMapper = filaMapper;
+
     }
 
 
@@ -89,4 +97,26 @@ public class SenhaService {
 
         return senhaRepository.save(novaSenha);
     }
+
+    public SenhaChamada buscarPorId(Long senhaId){
+        return senhaRepository.findById(senhaId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Senha não encontrada com ID: " + senhaId));
+    }
+
+    @Transactional(readOnly = true)
+    public List<FilaControllerDTO> buscarPorSetor(Long setorId) {
+        // 1. Valida se o setor existe
+        Setor setor = setorRepository.findById(setorId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Setor não encontrado com ID: " + setorId));
+
+        // 2. Usa o novo método do repositório para buscar as senhas
+        List<SenhaChamada> senhasDoSetor = senhaRepository.findByServicoSetorOrderByDataDeCriacaoDesc(setor);
+
+        // 3. Converte a lista de entidades para uma lista de DTOs e retorna
+        return senhasDoSetor.stream()
+                .map(filaMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+
 }

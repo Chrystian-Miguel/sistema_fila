@@ -7,8 +7,8 @@ import lombok.*;
  * Entidade que representa a tabela 'setores'.
  * Identifica o local onde a fila está rodando.
  */
-@Entity(name = "setores")
-@Table(name = "setores")
+@Entity(name = "setor")
+@Table(name = "setor")
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter

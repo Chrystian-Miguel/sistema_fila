@@ -9,4 +9,5 @@ public interface PrioridadeRepository extends JpaRepository<Prioridade,Long> {
 
 
     Optional<Prioridade> findByNivel(Integer nivelPrioridade);
+    Optional<Prioridade> findByDescricao(String descricao);
 }

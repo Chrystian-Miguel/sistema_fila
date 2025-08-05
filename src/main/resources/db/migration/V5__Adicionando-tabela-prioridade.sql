@@ -5,6 +5,6 @@ CREATE TABLE prioridade (
 );
 
 INSERT INTO prioridade (nivel, descricao) VALUES
-(0, 'Normal'),
-(1, 'Preferencial'),
-(2, 'Urgente');
+(0, 'NORMAL'),
+(1, 'PREFERENCIAL'),
+(2, 'URGENTE');

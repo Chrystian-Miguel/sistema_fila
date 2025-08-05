@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@Entity(name = "servicos")
-@Table(name = "servicos")
+@Entity(name = "servico")
+@Table(name = "servico")
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
