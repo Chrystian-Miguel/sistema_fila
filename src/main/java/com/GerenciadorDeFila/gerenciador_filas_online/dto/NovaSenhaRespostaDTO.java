@@ -1,7 +1,9 @@
 package com.GerenciadorDeFila.gerenciador_filas_online.dto;
-import com.GerenciadorDeFila.gerenciador_filas_online.model.Prioridade;
+
 import com.GerenciadorDeFila.gerenciador_filas_online.model.SenhaChamada;
+
 import java.time.LocalDateTime;
+
 public record NovaSenhaRespostaDTO(
         String senha,
         String status,

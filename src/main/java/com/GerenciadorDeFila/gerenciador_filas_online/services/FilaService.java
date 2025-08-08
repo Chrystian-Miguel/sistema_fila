@@ -4,7 +4,7 @@ import com.GerenciadorDeFila.gerenciador_filas_online.dto.FilaControllerDTO;
 import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.RecursoNaoEncontradoException;
 import com.GerenciadorDeFila.gerenciador_filas_online.mapper.FilaMapper;
 import com.GerenciadorDeFila.gerenciador_filas_online.model.*;
-import com.GerenciadorDeFila.gerenciador_filas_online.repository.*;
+import com.GerenciadorDeFila.gerenciador_filas_online.repository.SenhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +34,7 @@ public class FilaService {
 
 
 
-    //  O método retorna uma lista de DTOs com as 4 ultimas senhas atendidas no dia atual
+    //  O metodo retorna uma lista de DTOs com as 4 ultimas senhas atendidas no dia atual
 
     @Transactional(readOnly = true)
     public List<FilaControllerDTO> getUltimaSenhaAtendida() {

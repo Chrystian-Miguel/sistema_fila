@@ -1,7 +1,5 @@
 package com.GerenciadorDeFila.gerenciador_filas_online.dto;
 
-import com.GerenciadorDeFila.gerenciador_filas_online.model.Status;
-
 import java.time.LocalDateTime;
 
 

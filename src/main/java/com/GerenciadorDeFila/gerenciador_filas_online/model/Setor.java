@@ -1,12 +1,9 @@
 package com.GerenciadorDeFila.gerenciador_filas_online.model;
 
-import jakarta.persistence.*; // Use 'javax.persistence.*' se estiver em uma versão mais antiga do Spring Boot/Java EE
+import jakarta.persistence.*;
 import lombok.*;
 
-/**
- * Entidade que representa a tabela 'setores'.
- * Identifica o local onde a fila está rodando.
- */
+
 @Entity(name = "setor")
 @Table(name = "setor")
 @EqualsAndHashCode(of = "id")

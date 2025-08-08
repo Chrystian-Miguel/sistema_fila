@@ -28,10 +28,9 @@ public interface SenhaRepository extends JpaRepository<SenhaChamada, Long> {
     @Query("SELECT s FROM SenhaChamada s JOIN s.prioridade p " +
             "WHERE s.servico = :servico " +
             "AND s.status = :status " +
-            "AND p IN :prioridades " + // Filtra pela lista de prioridades
+            "AND p IN :prioridades " +
             "AND s.dataDeCriacao >= :inicioDoDia " +
             "ORDER BY p.nivel DESC, s.dataDeCriacao ASC")
-        // Ordena por nivel e depois por data
     List<SenhaChamada> findNextByPriorityList(
             @Param("servico") Servico servico,
             @Param("status") Status status,

@@ -2,10 +2,10 @@ package com.GerenciadorDeFila.gerenciador_filas_online.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.boot.jaxb.hbm.internal.RepresentationModeConverter;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "senha_chamada")
 @EqualsAndHashCode(of = "id")
