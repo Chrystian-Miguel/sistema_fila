@@ -1,4 +1,4 @@
-# Sistema de Gerenciamento de Filas Online
+# Sistema de Gerenciamento de Filas Online EM DESENVOLVIMENTO
 
 Este projeto é uma API RESTful construída com Spring Boot para gerir um sistema de filas de atendimento, com suporte para diferentes níveis de prioridade e tipos de guichês de atendimento.
 
