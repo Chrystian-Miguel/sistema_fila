@@ -68,7 +68,7 @@ public class FilaController {
             @RequestBody @Valid ChamarProximaSenhaRequestDTO requestDTO) {
 
 
-        FilaControllerDTO proximaSenha = filaService.chamarProximaSenhaDisponivel(
+        FilaControllerDTO proximaSenha = filaService.chamarProximaSenhaNormal(
                 requestDTO.atendenteId(),
                 requestDTO.caixaId(),
                 requestDTO.servicoId()
@@ -92,7 +92,7 @@ public class FilaController {
             @RequestBody @Valid ChamarProximaSenhaRequestDTO requestDTO) {
 
 
-        FilaControllerDTO proximaSenha = filaService.chamarProximaSenhaDisponivel(
+        FilaControllerDTO proximaSenha = filaService.chamarProximaSenhaPrioritaria(
                 requestDTO.atendenteId(),
                 requestDTO.caixaId(),
                 requestDTO.servicoId()
