@@ -9,14 +9,50 @@ Com a aplicação em execução, a documentação interativa da API (Swagger UI)
 [http://localhost:8080/swagger-ui/index.html](https://www.google.com/search?q=http://localhost:8080/swagger-ui/index.html)
 
 ## Funcionalidades
+Com certeza! Fiz uma reorganização completa na sua lista de funcionalidades, corrigindo a gramática, melhorando a clareza e agrupando os itens de forma lógica.
+
+A nova estrutura separa o que já foi feito (funcionalidades implementadas) do que ainda precisa ser desenvolvido (backlog), dividindo este último em categorias para facilitar o planejamento.
+
+---
+
+### **Funcionalidades Implementadas (Core da API)**
 
 - [x] **Geração de Senhas**: Endpoint para criar novas senhas para diferentes serviços e prioridades.
 - [x] **Chamada de Senhas**: Endpoints para chamar a próxima senha da fila.
-- [x] **Controle de Prioridade**: O sistema respeita uma ordem de prioridade (Urgente \> Preferencial \> Normal) ao chamar senhas.
-- [x] **Guichês Especializados**: Endpoints específicos para guichês que atendem apenas filas normais ou apenas filas prioritárias.
-- [x] **Visualização de Histórico**: Endpoint para visualizar as últimas senhas atendidas.
-- [ ] **Impressão/Retirada Digital**: Funcionalidade futura para permitir que o utilizador obtenha a senha física ou digitalmente.
+- [x] **Controle de Prioridade**: O sistema respeita a ordem de prioridade (Urgente > Preferencial > Normal) ao chamar senhas.
+- [x] **Guichês Especializados**: Endpoints para guichês que atendem apenas filas normais ou apenas filas prioritárias (normais + urgentes e preferenciais + urgentes).
 
+
+---
+
+### **Próximos Passos (Backlog de Desenvolvimento)**
+
+#### **Módulo de Gerenciamento (Cadastros)**
+
+- [ ] **Cadastro de Funcionários**: Criar e gerenciar os dados dos atendentes.
+- [ ] **Cadastro de Setores**: Criar e gerenciar os setores de atendimento da empresa.
+- [ ] **Cadastro de Serviços**: Criar e gerenciar os serviços, vinculando cada um a um setor específico.
+
+#### **Melhorias no Fluxo de Atendimento**
+
+- [ ] **Transferência de Senha**: Permitir que um atendente encaminhe uma senha para outro setor/serviço, mantendo o mesmo número e prioridade para o cliente.
+
+#### **Experiência do Cliente**
+
+- [ ] **Obtenção de Senha por QR Code**: Permitir que o cliente leia um QR Code para gerar uma senha e receber notificações de chamada no seu próprio celular (requer que ambos estejam na mesma rede local, inicialmente).
+- [ ] **Impressão e Retirada Digital**: Funcionalidade para o cliente imprimir um ticket físico da senha ou recebê-la em formato digital.
+
+#### **Interfaces e Acesso (UI/UX e Segurança)**
+
+- [ ] **Sistema de Autenticação e Login**: Implementar cadastro de usuários (com diferentes níveis de permissão) e tela de login para acesso ao painel de controle.
+- [ ] **Interface Gráfica (Painel de Controle)**: Desenvolver a interface para os funcionários realizarem as operações do dia a dia:
+    - Painel de chamada de senhas.
+    - Telas para os cadastros de atendentes, setores e serviços.
+- [ ] **Interface Gráfica (Tela Pública)**: Criar a tela que será exibida ao público, mostrando as últimas senhas chamadas e seus respectivos guichês.
+
+#### **Análise de Dados**
+- [ ] **Visualização de Histórico**: Endpoint para consultar as últimas senhas atendidas.
+- [ ] **Módulo de Estatísticas**: Gerar relatórios e dados sobre o atendimento, como tempo médio de espera, tempo de atendimento por serviço/setor, senhas atendidas por funcionário, etc.
 ## Tecnologias Utilizadas
 
 * **Backend**: Java 21, Spring Boot 3
