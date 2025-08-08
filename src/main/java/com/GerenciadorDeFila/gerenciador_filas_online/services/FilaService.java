@@ -78,6 +78,7 @@ public class FilaService {
     }
 
     // chamar a proxima senha respeitando o nivel da prioridade (caixa misto)
+
     @Transactional
     public FilaControllerDTO chamarProximaSenhaDisponivel(Long atendenteId, Long caixaId, Long servicoId) {
         // Para um caixa misto, buscamos todas as prioridades cadastradas.
@@ -89,10 +90,7 @@ public class FilaService {
     }
 
 
-    /**
-     * Método central e reutilizável que contém a lógica de negócio principal.
-     * Este é o "motor" do serviço de chamadas.
-     */
+
     private FilaControllerDTO chamarProximaSenhaComPrioridades(Long atendenteId, Long caixaId, Long servicoId, List<Prioridade> prioridades) {
         // 1. Busca as entidades base
         Status statusAguardando = entityFinderService.findStatusByDescricao("AGUARDANDO");
