@@ -8,12 +8,6 @@ Com a aplicação em execução, a documentação interativa da API (Swagger UI)
 
 [http://localhost:8080/swagger-ui/index.html](https://www.google.com/search?q=http://localhost:8080/swagger-ui/index.html)
 
-## Funcionalidades
-Com certeza! Fiz uma reorganização completa na sua lista de funcionalidades, corrigindo a gramática, melhorando a clareza e agrupando os itens de forma lógica.
-
-A nova estrutura separa o que já foi feito (funcionalidades implementadas) do que ainda precisa ser desenvolvido (backlog), dividindo este último em categorias para facilitar o planejamento.
-
----
 
 ### **Funcionalidades Implementadas (Core da API)**
 
