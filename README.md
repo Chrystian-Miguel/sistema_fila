@@ -1,6 +1,6 @@
 # Sistema de Gerenciamento de Filas Online EM DESENVOLVIMENTO
 
-Este projeto é uma API RESTful construída com Spring Boot para gerir um sistema de filas de atendimento, com suporte para diferentes níveis de prioridade e tipos de guichês de atendimento.
+Este projeto é uma API REST construída com Spring Boot para gerir um sistema de filas de atendimento, com suporte para diferentes níveis de prioridade e tipos de guichês de atendimento.
 
 ## Acesso à Documentação Interativa (Swagger)
 
@@ -8,12 +8,6 @@ Com a aplicação em execução, a documentação interativa da API (Swagger UI)
 
 [http://localhost:8080/swagger-ui/index.html](https://www.google.com/search?q=http://localhost:8080/swagger-ui/index.html)
 
-## Funcionalidades
-Com certeza! Fiz uma reorganização completa na sua lista de funcionalidades, corrigindo a gramática, melhorando a clareza e agrupando os itens de forma lógica.
-
-A nova estrutura separa o que já foi feito (funcionalidades implementadas) do que ainda precisa ser desenvolvido (backlog), dividindo este último em categorias para facilitar o planejamento.
-
----
 
 ### **Funcionalidades Implementadas (Core da API)**
 
@@ -193,7 +187,7 @@ Busca a próxima senha respeitando toda a ordem de prioridade (Urgente \> Prefer
     "nomeCaixa": "Guichê de Suporte"
   }
   ```
-
+![Diagrama do Banco de Dados da Fila Online](fila_online_db.png)
 #### Chamar Próxima Senha (Guichê Normal)
 
 Busca a próxima senha considerando apenas as prioridades **Normal** e **Urgente**.
@@ -209,3 +203,6 @@ Busca a próxima senha considerando apenas as prioridades **Preferencial** e **U
 * **Método:** `POST`
 * **Path:** `/api/fila/chamar-proxima-prioritaria`
 * **Corpo da Requisição:** Idêntico ao do guichê misto.
+
+
+
