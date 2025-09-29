@@ -1,8 +1,8 @@
 package com.GerenciadorDeFila.gerenciador_filas_online.services;
 
 import com.GerenciadorDeFila.gerenciador_filas_online.dto.FilaControllerDTO;
-import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.RecursoNaoEncontradoException;
-import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.ValidacaoNegocioException;
+import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.tratamendoDeErros.RecursoNaoEncontradoException;
+import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.tratamendoDeErros.ValidacaoNegocioException;
 import com.GerenciadorDeFila.gerenciador_filas_online.mapper.FilaMapper;
 import com.GerenciadorDeFila.gerenciador_filas_online.model.*;
 import com.GerenciadorDeFila.gerenciador_filas_online.repository.*;

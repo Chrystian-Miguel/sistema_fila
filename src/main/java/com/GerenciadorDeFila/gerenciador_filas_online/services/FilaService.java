@@ -1,7 +1,7 @@
 package com.GerenciadorDeFila.gerenciador_filas_online.services;
 
 import com.GerenciadorDeFila.gerenciador_filas_online.dto.FilaControllerDTO;
-import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.RecursoNaoEncontradoException;
+import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.tratamendoDeErros.RecursoNaoEncontradoException;
 import com.GerenciadorDeFila.gerenciador_filas_online.mapper.FilaMapper;
 import com.GerenciadorDeFila.gerenciador_filas_online.model.*;
 import com.GerenciadorDeFila.gerenciador_filas_online.repository.SenhaRepository;
@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 public class FilaService {
 
     private final SenhaRepository senhaRepository;
-    private final EntityFinderService entityFinderService;
+    private final ChamarSenhasService entityFinderService;
     private final FilaMapper filaMapper;
 
     @Autowired
     public FilaService(SenhaRepository senhaRepository,
-                       EntityFinderService entityFinderService,
+                       ChamarSenhasService entityFinderService,
                        FilaMapper filaMapper ) {
         this.senhaRepository = senhaRepository;
         this.filaMapper = filaMapper;
@@ -56,12 +56,9 @@ public class FilaService {
 
     @Transactional
     public FilaControllerDTO chamarProximaSenhaNormal(Long atendenteId, Long caixaId, Long servicoId) {
-        // Define as regras de negócio para este tipo de chamada
         Prioridade prioridadeNormal = entityFinderService.findPrioridadeByDescricao("NORMAL");
         Prioridade prioridadeUrgente = entityFinderService.findPrioridadeByDescricao("URGENTE");
-
-        // Delega a execução para o método central
-        return chamarProximaSenhaComPrioridades(atendenteId, caixaId, servicoId, List.of(prioridadeNormal, prioridadeUrgente));
+        return chamarProximaSenha(atendenteId, caixaId, servicoId, List.of(prioridadeNormal, prioridadeUrgente));
     }
 
 
@@ -69,38 +66,28 @@ public class FilaService {
 
     @Transactional
     public FilaControllerDTO chamarProximaSenhaPrioritaria(Long atendenteId, Long caixaId, Long servicoId) {
-        // Define as regras de negócio para este tipo de chamada
         Prioridade prioridadePreferencial = entityFinderService.findPrioridadeByDescricao("PREFERENCIAL");
         Prioridade prioridadeUrgente = entityFinderService.findPrioridadeByDescricao("URGENTE");
-
-        // Delega a execução para o método central
-        return chamarProximaSenhaComPrioridades(atendenteId, caixaId, servicoId, List.of(prioridadePreferencial, prioridadeUrgente));
+        return chamarProximaSenha(atendenteId, caixaId, servicoId, List.of(prioridadePreferencial, prioridadeUrgente));
     }
 
     // chamar a proxima senha respeitando o nivel da prioridade (caixa misto)
 
     @Transactional
     public FilaControllerDTO chamarProximaSenhaDisponivel(Long atendenteId, Long caixaId, Long servicoId) {
-        // Para um caixa misto, buscamos todas as prioridades cadastradas.
-        // (Você precisaria criar o método `findAll()` no seu PrioridadeRepository e `findAllPrioridades()` no EntityFinderService)
         List<Prioridade> todasAsPrioridades = entityFinderService.findAllPrioridades();
-
-        // Delega a execução para o método central
-        return chamarProximaSenhaComPrioridades(atendenteId, caixaId, servicoId, todasAsPrioridades);
+        return chamarProximaSenha(atendenteId, caixaId, servicoId, todasAsPrioridades);
     }
 
 
 
-    private FilaControllerDTO chamarProximaSenhaComPrioridades(Long atendenteId, Long caixaId, Long servicoId, List<Prioridade> prioridades) {
-        // 1. Busca as entidades base
+    private FilaControllerDTO chamarProximaSenha(Long atendenteId, Long caixaId, Long servicoId, List<Prioridade> prioridades) {
         Status statusAguardando = entityFinderService.findStatusByDescricao("AGUARDANDO");
         Status statusEmAtendimento = entityFinderService.findStatusByDescricao("EM_ATENDIMENTO");
         Atendente atendente = entityFinderService.findAtendenteById(atendenteId);
         Caixa caixa = entityFinderService.findCaixaById(caixaId);
         Servico servico = entityFinderService.findServicoById(servicoId);
         LocalDateTime inicioDoDia = LocalDate.now().atStartOfDay();
-
-        // 2. Busca a senha no repositório usando a query mais poderosa
         Pageable limit = PageRequest.of(0, 1);
         SenhaChamada senhaParaChamar = senhaRepository
                 .findNextByPriorityList(servico, statusAguardando, prioridades, inicioDoDia, limit)
@@ -108,16 +95,12 @@ public class FilaService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException(
                         "Nenhuma senha aplicável na fila de espera para o serviço: " + servico.getDescricao()));
 
-        // 3. Atualiza a entidade com os novos dados
         senhaParaChamar.setStatus(statusEmAtendimento);
         senhaParaChamar.setDataDeProcessamento(LocalDateTime.now());
         senhaParaChamar.setAtendente(atendente);
         senhaParaChamar.setCaixa(caixa);
 
-        // 4. Persiste as alterações
         senhaRepository.save(senhaParaChamar);
-
-        // 5. Mapeia o resultado para o DTO de resposta
         return filaMapper.toDTO(senhaParaChamar);
     }
 

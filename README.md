@@ -187,7 +187,6 @@ Busca a próxima senha respeitando toda a ordem de prioridade (Urgente \> Prefer
     "nomeCaixa": "Guichê de Suporte"
   }
   ```
-![Diagrama do Banco de Dados da Fila Online](fila_online_db.png)
 #### Chamar Próxima Senha (Guichê Normal)
 
 Busca a próxima senha considerando apenas as prioridades **Normal** e **Urgente**.
@@ -206,3 +205,4 @@ Busca a próxima senha considerando apenas as prioridades **Preferencial** e **U
 
 
 
+![Diagrama do Banco de Dados da Fila Online](fila_online_db.png)

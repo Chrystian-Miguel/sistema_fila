@@ -1,6 +1,6 @@
 package com.GerenciadorDeFila.gerenciador_filas_online.services;
 
-import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.RecursoNaoEncontradoException;
+import com.GerenciadorDeFila.gerenciador_filas_online.infra.exceptions.tratamendoDeErros.RecursoNaoEncontradoException;
 import com.GerenciadorDeFila.gerenciador_filas_online.model.*;
 import com.GerenciadorDeFila.gerenciador_filas_online.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EntityFinderService {
+public class ChamarSenhasService {
 
     private final StatusRepository statusRepository;
     private final PrioridadeRepository prioridadeRepository;
@@ -18,7 +18,7 @@ public class EntityFinderService {
     private final ServicoRepository servicoRepository;
 
     @Autowired
-    public EntityFinderService(StatusRepository statusRepository,
+    public ChamarSenhasService(StatusRepository statusRepository,
                                PrioridadeRepository prioridadeRepository,
                                AtendenteRepository atendenteRepository,
                                CaixaRepository caixaRepository,
@@ -32,12 +32,14 @@ public class EntityFinderService {
 
     public Status findStatusByDescricao(String descricao) {
         return statusRepository.findByDescricao(descricao)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Status '" + descricao + "' não configurado no sistema."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException(
+                        "Status '" + descricao + "' não configurado no sistema."));
     }
 
     public Prioridade findPrioridadeByDescricao(String descricao) {
         return prioridadeRepository.findByDescricao(descricao)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Prioridade '" + descricao + "' não configurada no sistema."));
+                .orElseThrow(() -> new RecursoNaoEncontradoException(
+                        "Prioridade '" + descricao + "' não configurada no sistema."));
     }
 
     public Atendente findAtendenteById(Long id) {
